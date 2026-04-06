@@ -1,0 +1,66 @@
+@import 'tailwindcss';
+
+@theme {
+  /* backgrounds                        */
+  --color-space-950: #03040a;
+  --color-space-900: #05070f;
+  --color-space-800: #080b16;
+  --color-space-700: #0d1020;
+
+  /* surfaces — cards, painéis          */
+  --color-surface-900: #0f1422;
+  --color-surface-800: #141928;
+  --color-surface-700: #1a2035;
+  --color-surface-600: #222840;
+
+  /* tipografia                         */
+  --color-star-100: #f0f4ff;
+  --color-star-200: #d4dcf0;
+  --color-star-300: #8a95b0;
+  --color-star-400: #4a5268;
+
+  /* accent — nebula blue               */
+  --color-nebula-400: #6b9de8;
+  --color-nebula-500: #4a7cdc;
+  --color-nebula-600: #2a5ab8;
+  --color-nebula-900: #112040;
+
+  /* highlight — gold                   */
+  --color-gold-300: #e8c96a;
+  --color-gold-400: #c9a84c;
+  --color-gold-500: #9a7a30;
+  --color-gold-900: #2a1e08;
+
+  /* planetas — cor temática            */
+  --color-planet-mercury: #a0a0a0;
+  --color-planet-venus: #c4914a;
+  --color-planet-earth: #4a8ac4;
+  --color-planet-mars: #c4603a;
+  --color-planet-jupiter: #c4a47a;
+  --color-planet-saturn: #d4b87a;
+  --color-planet-uranus: #7ac4c4;
+  --color-planet-neptune: #4a6ac4;
+
+  /* tipografia                         */
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  /* espaçamentos          */
+  --spacing-18: 4.5rem;
+  --spacing-22: 5.5rem;
+  --spacing-128: 32rem;
+
+  /* bordas                             */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-full: 9999px;
+
+  /* transições                         */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-slow: 700ms;
+  --duration-med: 400ms;
+  --duration-fast: 200ms;
+}
