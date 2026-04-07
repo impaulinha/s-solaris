@@ -17,7 +17,7 @@ export function Layout({ roulette, info, scene }: LayoutProps) {
         className="relative z-10
           order-3 flex items-center justify-center
           md:order-2 md:col-start-2 md:row-start-2 md:border-l-0
-          lg:order-1 lg:col-start-1 lg:row-start-1 lg:border-t-0
+          lg:order-1 lg:col-start-1 lg:row-start-1 lg:border-t-0 
         "
       >
         {roulette}
