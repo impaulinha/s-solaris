@@ -24,7 +24,7 @@ export function RouletteVertical({
     if (diff === 0) return 'active'
     if (diff === -1) return 'prev'
     if (diff === 1) return 'next'
-    return 'hidden'
+    return 'others'
   }
 
   return (
