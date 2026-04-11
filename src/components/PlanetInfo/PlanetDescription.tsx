@@ -16,7 +16,7 @@ const variants = {
 export function PlanetDescription({ description }: IPlanetDescriptionProps) {
   return (
     <motion.p
-      className="mt-6 max-w-sm font-sans text-sm leading-relaxed text-star-300 md:text-base"
+      className="mt-6 max-w-sm font-sans text-[15px] leading-relaxed text-star-300 md:text-base"
       variants={variants}
     >
       {description}

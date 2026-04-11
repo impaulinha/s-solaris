@@ -4,6 +4,7 @@ import { useActivePlanet } from './hooks/useActivePlanet'
 import { useScrollHijack } from './hooks/useScrollHijack'
 import { PlanetRoulette } from './components/PlanetRoulette'
 import { PlanetInfo } from './components/PlanetInfo'
+import { PlanetScene } from './components/PlanetScene'
 
 function App() {
   const {
@@ -29,7 +30,7 @@ function App() {
           />
         }
         info={<PlanetInfo planet={activePlanet} />}
-        scene={<p>Planeta</p>}
+        scene={<PlanetScene planet={activePlanet} />}
       />
     </>
   )

@@ -8,11 +8,25 @@ interface IPlanetInfoProps {
   planet: IPlanet
 }
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 },
+  },
+  exit: {
+    opacity: 0,
+    y: -20,
+    transition: { duration: 0.3 },
+  },
+}
+
 export function PlanetInfo({ planet }: IPlanetInfoProps) {
   return (
     <AnimatePresence mode="wait">
       <motion.div
         key={planet.id}
+        variants={containerVariants}
         initial="hidden"
         animate="visible"
         exit="exit"

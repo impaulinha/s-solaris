@@ -77,17 +77,22 @@ export function PlanetStats({ apiId }: IPlanetStatsProps) {
       value: formatOrbit(data.sideralOrbit),
     },
     {
-      label: 'Luas',
-      value: formatMoons(data.moons),
+      label: 'Temperatura',
+      value: formatTemp(data.avgTemp),
     },
     {
-      label: 'Avg Temp',
-      value: formatTemp(data.avgTemp),
+      label: 'Luas',
+      value: formatMoons(data.moons),
     },
   ]
 
   return (
-    <motion.div initial="hidden" animate="visible" variants={containerVariants}>
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+      className="grid grid-cols-3 items-center w-full gap-2 mt-8 items-start md:gap-x-10"
+    >
       {stats.map((stat) => (
         <motion.div key={stat.label} variants={itemVariants}>
           <StatBlock label={stat.label} value={stat.value} />

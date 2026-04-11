@@ -17,7 +17,7 @@ export function Layout({ roulette, info, scene }: LayoutProps) {
         className="relative z-10
           order-3 flex items-center justify-center
           md:order-2 md:col-start-2 md:row-start-2 md:border-l-0
-          lg:order-1 lg:col-start-1 lg:row-start-1 lg:border-t-0 
+          lg:order-1 lg:col-start-1 lg:row-start-1 lg:border-t-0
         "
       >
         {roulette}
@@ -28,7 +28,8 @@ export function Layout({ roulette, info, scene }: LayoutProps) {
           relative z-10
           order-2 flex flex-col justify-end px-6 py-8
           md:order-2 md:col-start-2 md:row-span-1 md:justify-center md:px-10 md:py-16
-          lg:order-2 lg:col-start-2 lg:row-span-1 lg:px-12
+          md:bg-gradient-to-b md:from-surface-900 md:to-space-900
+          lg:order-2 lg:col-start-2 lg:row-span-1 lg:px-12 lg:ml-10
         "
       >
         {info}
@@ -36,7 +37,7 @@ export function Layout({ roulette, info, scene }: LayoutProps) {
 
       <section
         className="
-          relative z-10
+          relative z-10 
           order-1 flex min-h-[40dvh] items-center justify-center
           md:order-1 md:col-start-1 md:row-start-1 md:row-span-2
           lg:order-3 lg:col-start-3
