@@ -3,6 +3,7 @@ import { Navbar } from '@/components/Navbar'
 import { useActivePlanet } from './hooks/useActivePlanet'
 import { useScrollHijack } from './hooks/useScrollHijack'
 import { PlanetRoulette } from './components/PlanetRoulette'
+import { PlanetInfo } from './components/PlanetInfo'
 
 function App() {
   const {
@@ -27,7 +28,7 @@ function App() {
             onSelect={goToIndexPlanet}
           />
         }
-        info={<p>Infos</p>}
+        info={<PlanetInfo planet={activePlanet} />}
         scene={<p>Planeta</p>}
       />
     </>
