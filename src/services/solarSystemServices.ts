@@ -4,7 +4,7 @@ import { solarSystemApi } from './instances/solarSystemApi'
 export async function getPlanetById(apiId: string): Promise<ISolarSystemBody> {
   try {
     const response = await solarSystemApi.get<ISolarSystemBody>(
-      `bodies/${apiId}`
+      `/bodies/${apiId}`
     )
 
     return response.data

@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/solar-api/:path*",
+      "destination": "https://api.le-systeme-solaire.net/rest/:path*"
+    }
+  ]
+}
