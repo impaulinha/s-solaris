@@ -27,8 +27,9 @@ export function Layout({ roulette, info, scene }: LayoutProps) {
         className="
           relative z-10
           order-2 flex flex-col justify-end px-6 py-8
+          overflow-hidden
           md:order-2 md:col-start-2 md:row-span-1 md:justify-center md:px-10 md:py-16
-          md:bg-gradient-to-b md:from-surface-900 md:to-space-900
+          md:bg-gradient-to-b md:from-surface-900 md:to-space-900 md:scrollbar-hide
           lg:order-2 lg:col-start-2 lg:row-span-1 lg:px-12 lg:ml-10
         "
       >

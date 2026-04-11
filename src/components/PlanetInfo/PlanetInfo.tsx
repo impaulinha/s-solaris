@@ -30,7 +30,11 @@ export function PlanetInfo({ planet }: IPlanetInfoProps) {
         initial="hidden"
         animate="visible"
         exit="exit"
-        className="flex flex-col"
+        className="flex h-full flex-col overflow-y-auto scrollbar-hide"
+        style={{
+          scrollbarWidth: 'none', // Para Firefox
+          msOverflowStyle: 'none', // Para IE/Edge
+        }}
       >
         <PlanetHeader planet={planet} />
         <PlanetDescription description={planet.description} />
