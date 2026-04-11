@@ -4,7 +4,7 @@ export const PLANETS: IPlanet[] = [
   {
     id: 'mercury',
     index: 1,
-    name: 'Mercury',
+    name: 'Mercúrio',
     apiId: 'mercure',
     nasaQuery: 'Mercury planet',
     texture: '/src/assets/textures/mercury.jpg',
@@ -15,7 +15,7 @@ export const PLANETS: IPlanet[] = [
   {
     id: 'venus',
     index: 2,
-    name: 'Venus',
+    name: 'Vênus',
     apiId: 'venus',
     nasaQuery: 'Venus planet',
     texture: '/src/assets/textures/venus.jpg',
@@ -26,7 +26,7 @@ export const PLANETS: IPlanet[] = [
   {
     id: 'earth',
     index: 3,
-    name: 'Earth',
+    name: 'Terra',
     apiId: 'terre',
     nasaQuery: 'Earth planet',
     texture: '/src/assets/textures/earth.jpg',
@@ -37,7 +37,7 @@ export const PLANETS: IPlanet[] = [
   {
     id: 'mars',
     index: 4,
-    name: 'Mars',
+    name: 'Marte',
     apiId: 'mars',
     nasaQuery: 'Mars planet surface',
     texture: '/src/assets/textures/mars.jpg',
@@ -48,7 +48,7 @@ export const PLANETS: IPlanet[] = [
   {
     id: 'jupiter',
     index: 5,
-    name: 'Jupiter',
+    name: 'Júpiter',
     apiId: 'jupiter',
     nasaQuery: 'Jupiter planet',
     texture: '/src/assets/textures/jupiter.jpg',
@@ -59,7 +59,7 @@ export const PLANETS: IPlanet[] = [
   {
     id: 'saturn',
     index: 6,
-    name: 'Saturn',
+    name: 'Saturno',
     apiId: 'saturne',
     nasaQuery: 'Saturn planet rings',
     texture: '/src/assets/textures/saturn.jpg',
@@ -71,7 +71,7 @@ export const PLANETS: IPlanet[] = [
   {
     id: 'uranus',
     index: 7,
-    name: 'Uranus',
+    name: 'Urano',
     apiId: 'uranus',
     nasaQuery: 'Uranus planet',
     texture: '/src/assets/textures/uranus.jpg',
@@ -82,7 +82,7 @@ export const PLANETS: IPlanet[] = [
   {
     id: 'neptune',
     index: 8,
-    name: 'Neptune',
+    name: 'Netuno',
     apiId: 'neptune',
     nasaQuery: 'Neptune planet',
     texture: '/src/assets/textures/neptune.jpg',
