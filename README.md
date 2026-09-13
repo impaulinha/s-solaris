@@ -1,11 +1,19 @@
 <h1 align="center">
-  🪐 <a href="#" alt="Nome do Projeto">S-Solaris</a> 🪐
+  🪐 <a href="https://s-solaris.vercel.app">S-Solaris</a> 🪐
 </h1>
+
+<p align="center">
+  Explore os oito planetas do Sistema Solar em uma experiência 3D animada, com dados astronômicos reais.
+</p>
 
 <p align="center">
   <img alt="Tamanho do repositório" src="https://img.shields.io/github/repo-size/impaulinha/s-solaris">
   <img alt="Licença" src="https://img.shields.io/github/license/impaulinha/s-solaris">
-  <img alt="Last commit" src="https://img.shields.io/github/last-commit/impaulinha/s-solaris">
+  <img alt="Último commit" src="https://img.shields.io/github/last-commit/impaulinha/s-solaris">
+</p>
+
+<p align="center">
+  <a href="https://s-solaris.vercel.app"><strong>🔭 Acessar o projeto</strong></a>
 </p>
 
 ---
@@ -25,25 +33,23 @@
 
 ## 📌 Sobre
 
-O **S-Solaris** é uma aplicação web que permite explorar os oito planetas do sistema solar de forma imersiva. Cada planeta é renderizado como uma esfera 3D com texturas reais, acompanhado de dados astronômicos obtidos em tempo real via API.
+O **S-Solaris** é uma aplicação web para explorar os oito planetas do Sistema Solar de forma imersiva. Cada planeta é renderizado como uma esfera 3D com texturas reais e acompanhado de dados astronômicos obtidos pela API [Solar System OpenData](https://api.le-systeme-solaire.net), em uma interface construída com foco em animações fluidas e design cinematográfico.
 
-Uma experiência visual e interativa do sistema solar, construída com foco em animações fluidas, design premium e dados astronômicos reais.
+A navegação acontece pelo scroll do mouse, pelo teclado ou por swipe no mobile. Cada interação dispara uma transição coreografada entre os planetas, com a roleta, as informações e a cena 3D sincronizadas.
 
-A navegação acontece através do scroll do mouse, teclas direcionais ou swipe no mobile. Cada interação dispara uma transição animada entre os planetas, com a roleta lateral sincronizada ao conteúdo central.
-
-Funcionalidades:
+### ✨ Funcionalidades
 
 - Visualização 3D dos planetas com texturas reais, inclinação axial real, atmosfera, nuvens (Terra) e anéis (Saturno)
 - Céu estrelado 3D com parallax do mouse e efeito de "salto" a cada troca de planeta
-- Dados astronômicos em tempo real (massa, gravidade, raio, órbita, temperatura, luas, distância do Sol e rotação)
-- Navegação por scroll, teclado (setas, Home/End e teclas 1 a 8) e swipe
+- Dados astronômicos de cada planeta: massa, gravidade, raio, órbita, temperatura, luas, distância do Sol e rotação
+- Navegação por scroll, teclado (setas, Home/End e teclas de 1 a 8) e swipe
 - Roleta em arco: vertical no desktop e horizontal no mobile
 - Preloader com o progresso real do carregamento das texturas
 - Animações com GSAP e Framer Motion: letras reveladas, contadores, textos "decodificados", nome do planeta em marquee, cursor customizado e botões magnéticos
 - Interface que assume a cor de cada planeta
 - Páginas de 404 e de erro no mesmo estilo visual, com um planeta animado em CSS
 - Respeita a preferência de movimento reduzido do sistema
-- Design responsivo mobile-first
+- Layout responsivo para mobile, tablet e desktop, incluindo telas de pouca altura
 
 ---
 
@@ -51,18 +57,16 @@ Funcionalidades:
 
 Abaixo, uma demonstração da aplicação:
 
-- Web
+### 💻 Web
+
 <div align="center">
-  <video src="https://github.com/user-attachments/assets/449a0d06-0d15-45a3-b433-c9b89320e5f6" width="100%" autoplay loop muted 
-playsinline>
-  </video>
+  <video src="https://github.com/user-attachments/assets/449a0d06-0d15-45a3-b433-c9b89320e5f6" width="100%" autoplay loop muted playsinline></video>
 </div>
 
-- Mobile
+### 📱 Mobile
+
 <div align="center">
-  <video src="https://github.com/user-attachments/assets/d01fa28b-b73a-44a6-a71e-4af612e8cd6c" width="100%" autoplay loop muted 
-playsinline>
-  </video>
+  <video src="https://github.com/user-attachments/assets/d01fa28b-b73a-44a6-a71e-4af612e8cd6c" width="100%" autoplay loop muted playsinline></video>
 </div>
 
 ---
@@ -71,14 +75,17 @@ playsinline>
 
 As seguintes tecnologias foram utilizadas no projeto:
 
+- [React](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
 - [Vite](https://vite.dev/)
-- [Typescript](https://www.typescriptlang.org/)
-- [Tailwind](https://tailwindcss.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Three.js](https://threejs.org/)
+- [React Three Fiber](https://r3f.docs.pmnd.rs/getting-started/introduction) e [Drei](https://github.com/pmndrs/drei)
+- [GSAP](https://gsap.com/)
 - [Framer Motion](https://www.npmjs.com/package/framer-motion)
-- [Gsap](https://gsap.com/)
-- [React Three Fiber](https://r3f.docs.pmnd.rs/getting-started/introduction)
-- [Axios](https://www.npmjs.com/package/axios)
-- [Tanstack Query](https://tanstack.com/query/latest)
+- [TanStack Query](https://tanstack.com/query/latest)
+- [Axios](https://axios-http.com/)
+- [Fontsource](https://fontsource.org/)
 - [Solar System OpenData](https://api.le-systeme-solaire.net)
 
 ---
@@ -87,43 +94,54 @@ As seguintes tecnologias foram utilizadas no projeto:
 
 ### 📋 Pré-requisitos
 
-É necessário que você tenha instalado em sua máquina:
-
-- [Node](https://nodejs.org/en/)
-
-Você pode seguir o passo a passo disponível na [documentação](https://vite.dev/) do Vite, onde há instruções que vão desde a instalação dos pré-requisitos até a execução da aplicação.
+- [Node.js](https://nodejs.org/) 20.19+ ou 22.12+
+- Uma chave gratuita da API Solar System OpenData, gerada [neste link](https://api.le-systeme-solaire.net/generatekey.html)
 
 ### ⚙️ Rodando o aplicativo
 
-Se já possui todos os pré-requisitos instalados, siga os seguintes comandos:
-
 ```bash
 # Clone este repositório
-$ git clone https://github.com/impaulinha/s-solaris.git
-# Acesse a pasta do projeto 
-$ cd s-solaris
+git clone https://github.com/impaulinha/s-solaris.git
+
+# Acesse a pasta do projeto
+cd s-solaris
+
+# Instale as dependências
+npm install
+
+# Crie o arquivo de variáveis de ambiente
+cp .env.example .env
 ```
 
-Para rodar, você pode utilizar o NPM:
+Preencha o `.env` com a sua chave da API:
 
-### `NPM`
-
-``` bash
-# Instala as dependências necessárias
-$ npm install
-# Cria o arquivo de variáveis de ambiente (preencha com a sua chave da Solar System OpenData)
-$ cp .env.example .env
-# Executa a aplicação
-$ npm run dev
+```env
+VITE_SOLAR_API_KEY=sua-chave-aqui
 ```
 
-A aplicação será aberta localmente. 
+Depois, execute a aplicação:
+
+```bash
+npm run dev
+```
+
+O navegador abrirá automaticamente em `http://localhost:5173`.
+
+### 📜 Scripts disponíveis
+
+| Comando           | Descrição                                        |
+| ----------------- | ------------------------------------------------ |
+| `npm run dev`     | Inicia o servidor de desenvolvimento             |
+| `npm run build`   | Verifica os tipos e gera a versão de produção    |
+| `npm run preview` | Serve localmente a versão de produção gerada     |
+| `npm run lint`    | Analisa o código com o ESLint                    |
+| `npm run format`  | Formata o código com o Prettier                  |
 
 ---
 
 ## 📝 Licença
 
-Este projeto esta sob a licença [MIT](./LICENSE).
+Este projeto está sob a licença [MIT](./LICENSE).
 
 ---
 
@@ -131,9 +149,9 @@ Este projeto esta sob a licença [MIT](./LICENSE).
 
 Feito com ❤️ e dedicação por Ana Paula 😊. Entre em contato 👇
 
-[![Linkedin Badge](https://img.shields.io/badge/-Paulinha-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/tgmarinho/)](https://www.linkedin.com/in/anapaula-aguiar/)
-[![Gmail Badge](https://img.shields.io/badge/-anaaguiar20016@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:tgmarinho@gmail.com)](mailto:anaaguiar20016@gmail.com)
+[![LinkedIn Badge](https://img.shields.io/badge/-Paulinha-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/anapaula-aguiar/)
+[![Gmail Badge](https://img.shields.io/badge/-anaaguiar20016@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white)](mailto:anaaguiar20016@gmail.com)
 
-- **Ana Paula Aguiar** - _Desenvolvedora Mobile_ - [impaulinha](anapaulaaguiar.dev)
+- **Ana Paula Aguiar** - _Desenvolvedora Mobile_ - [anapaulaaguiar.dev](https://anapaulaaguiar.dev)
 
 ---
