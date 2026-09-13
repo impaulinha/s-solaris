@@ -1,3 +1,4 @@
+import { motion, type Variants } from 'framer-motion'
 import { usePlanetData } from '@/hooks/usePlanetData'
 import {
   formatGravity,
@@ -7,97 +8,116 @@ import {
   formatRadius,
   formatTemp,
 } from '@/lib/formatPlanetData'
-import { motion } from 'framer-motion'
-import { StatBlock } from './StatBloc'
+import { StatBlock } from './StatBlock'
 
 interface IPlanetStatsProps {
   apiId: string
 }
 
-const containerVariants = {
+const gridVariants: Variants = {
   hidden: {},
   visible: {
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.4,
-    },
+    transition: { staggerChildren: 0.08, delayChildren: 0.35 },
   },
 }
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 12 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+  },
 }
 
+const GRID_CLASSES =
+  'mt-8 grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 md:mt-10 lg:gap-x-10 lg:gap-y-7'
+
+const SHIMMER_CLASSES =
+  'animate-shimmer rounded-full bg-linear-to-r from-star-100/5 via-star-100/15 to-star-100/5 bg-size-[200%_100%]'
+
 export function PlanetStats({ apiId }: IPlanetStatsProps) {
-  const { isPending, isError, data } = usePlanetData(apiId)
+  const { isPending, isError, isFetching, data, refetch } = usePlanetData(apiId)
 
   if (isPending) {
     return (
-      <div className="grid grid-cols-3 gap-6 mt-8">
-        {Array.from({ length: 3 }).map((_, i) => (
-          <div
-            key={i}
-            className="flex flex-col gap-2 border-t border-surface-700 pt-4"
+      <motion.div
+        variants={gridVariants}
+        aria-busy="true"
+        aria-label="Carregando dados do planeta"
+        className={GRID_CLASSES}
+      >
+        {Array.from({ length: 6 }).map((_, index) => (
+          <motion.div
+            key={index}
+            variants={itemVariants}
+            className="flex flex-col gap-3 border-t border-star-100/10 pt-4"
           >
-            <div className="h-2 w-16 rounded bg-surface-700 animate-pulse" />
-            <div className="h-3 w-24 rounded bg-surface-700 animate-pulse" />
-          </div>
+            <div className={`h-2 w-16 ${SHIMMER_CLASSES}`} />
+            <div className={`h-6 w-24 ${SHIMMER_CLASSES}`} />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     )
   }
 
   if (isError || !data) {
     return (
-      <p className="mt-8 font-mono text-xs text-star-400">
-        Falha ao carregar dados do planeta.
-      </p>
+      <motion.div
+        variants={itemVariants}
+        className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-star-100/10 pt-5 font-mono text-xs text-star-300 md:mt-10"
+      >
+        <span>Não foi possível carregar os dados deste planeta.</span>
+        <button
+          type="button"
+          onClick={() => refetch()}
+          disabled={isFetching}
+          className="group relative tracking-[0.2em] text-star-100 uppercase disabled:opacity-50"
+        >
+          {isFetching ? 'Tentando…' : 'Tentar novamente'}
+          <span className="absolute inset-x-0 -bottom-1 h-px origin-right scale-x-0 bg-planet transition-transform duration-500 group-hover:origin-left group-hover:scale-x-100" />
+        </button>
+      </motion.div>
     )
   }
 
   const stats = [
     {
       label: 'Gravidade',
-      value: formatGravity(data.gravity),
+      stat: formatGravity(data.gravity),
     },
     {
       label: 'Massa',
-      value: formatMass(
+      stat: formatMass(
         data.mass?.massValue ?? null,
         data.mass?.massExponent ?? null
       ),
     },
     {
       label: 'Raio',
-      value: formatRadius(data.meanRadius),
+      stat: formatRadius(data.meanRadius),
     },
     {
       label: 'Órbita',
-      value: formatOrbit(data.sideralOrbit),
+      stat: formatOrbit(data.sideralOrbit),
     },
     {
       label: 'Temperatura',
-      value: formatTemp(data.avgTemp),
+      stat: formatTemp(data.avgTemp),
     },
     {
       label: 'Luas',
-      value: formatMoons(data.moons),
+      stat: formatMoons(data.moons),
     },
   ]
 
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-      className="grid grid-cols-3 items-center w-full gap-2 mt-8 items-start md:gap-x-10"
-    >
-      {stats.map((stat) => (
-        <motion.div key={stat.label} variants={itemVariants}>
-          <StatBlock label={stat.label} value={stat.value} />
+    <motion.dl variants={gridVariants} className={GRID_CLASSES}>
+      {stats.map(({ label, stat }) => (
+        <motion.div key={label} variants={itemVariants}>
+          <StatBlock label={label} stat={stat} />
         </motion.div>
       ))}
-    </motion.div>
+    </motion.dl>
   )
 }

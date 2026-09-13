@@ -1,29 +1,25 @@
-import type { IPlanetDetails } from './planetDetails'
-
-export type IPlanetColor =
-  | 'planet-mercury'
-  | 'planet-venus'
-  | 'planet-earth'
-  | 'planet-mars'
-  | 'planet-jupiter'
-  | 'planet-saturn'
-  | 'planet-uranus'
-  | 'planet-neptune'
+export type IPlanetCategory =
+  | 'Planeta rochoso'
+  | 'Gigante gasoso'
+  | 'Gigante de gelo'
 
 export interface IPlanet {
   id: string
   index: number
   name: string
   apiId: string
-  nasaQuery: string
-  texture: string
-  color: IPlanetColor
-  ringTexture?: string
+  category: IPlanetCategory
   description: string
+  // cor de destaque aplicada na interface e no brilho da atmosfera
+  color: string
+  // inclinação axial real, em graus
+  axialTilt: number
+  // intensidade do brilho atmosférico (0 = sem atmosfera)
+  atmosphere: number
+  texture: string
+  cloudsTexture?: string
+  ringTexture?: string
 }
 
-export type IPlanetId = string
-
-export type PlanetFull = IPlanet & {
-  details?: IPlanetDetails
-}
+// sentido da navegação: 1 = próximo, -1 = anterior
+export type Direction = 1 | -1

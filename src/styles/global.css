@@ -1,29 +1,73 @@
-* {
-  box-sizing: border-box;
-  /* margin: 0; */
+@property --planet {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #c8b9a6;
+}
+
+:root {
+  color-scheme: dark;
+  transition: --planet 1.2s var(--ease-out-expo);
 }
 
 html {
   font-size: 16px;
-  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
 body {
-  background-color: var(--color-space-900);
+  height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background-color: var(--color-space-950);
   color: var(--color-star-200);
   font-family: var(--font-sans);
-  min-height: 100dvh;
-  overflow-x: hidden;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+::selection {
+  background-color: color-mix(in oklab, var(--planet) 40%, transparent);
+  color: var(--color-star-100);
+}
+
+:focus-visible {
+  outline: 1px solid var(--planet);
+  outline-offset: 4px;
 }
 
 canvas {
   display: block;
+}
+
+/* cursor customizado substitui o nativo apenas em dispositivos com mouse */
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}
+
+@utility scrollbar-hide {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--stroke-color, currentColor);
+}
+
+@utility bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

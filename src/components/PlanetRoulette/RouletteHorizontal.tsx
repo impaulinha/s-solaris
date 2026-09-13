@@ -1,94 +1,168 @@
+import { useRef } from 'react'
 import { PLANETS } from '@/constants/planets'
-import gsap from 'gsap'
-import React, { useEffect, useRef } from 'react'
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
+import { gsap, useGSAP } from '@/lib/gsap'
+import { getCircularOffset, wrapOffset } from '@/lib/utils'
 import { RouletteItem } from './RouletteItem'
 
 interface IRouletteHorizontalProps {
   activeIndex: number
   onSelect: (index: number) => void
-  onNext: () => void
-  onPrev: () => void
 }
+
+// ângulo (rad) entre planetas vizinhos na roleta
+const ITEM_ANGLE = 0.3
+// raio da roleta proporcional à largura disponível
+const RADIUS_RATIO = 0.9
+// centro vertical do planeta ativo, a partir do topo
+const ANCHOR_Y = 44
+const VISIBLE_RANGE = 2.6
+
+const TICK_STEP = ITEM_ANGLE / 4
+const TICKS = Array.from(
+  { length: Math.round((Math.PI * 2) / TICK_STEP) },
+  (_, index) => {
+    const angle = index * TICK_STEP
+    const isMajor = index % 4 === 0
+    const innerRadius = isMajor ? 96 : 98.5
+
+    return (
+      <line
+        key={index}
+        x1={Math.cos(angle) * innerRadius}
+        y1={Math.sin(angle) * innerRadius}
+        x2={Math.cos(angle) * 100}
+        y2={Math.sin(angle) * 100}
+        className={isMajor ? 'stroke-star-100/40' : 'stroke-star-100/15'}
+        vectorEffect="non-scaling-stroke"
+      />
+    )
+  }
+)
 
 export function RouletteHorizontal({
   activeIndex,
   onSelect,
-  onNext,
-  onPrev,
 }: IRouletteHorizontalProps) {
-  const listRef = useRef<HTMLDivElement>(null)
-  const touchStartX = useRef<number>(0)
-  const ITEM_WIDTH = 100
+  const reducedMotion = usePrefersReducedMotion()
+  const containerRef = useRef<HTMLDivElement>(null)
+  const dialRef = useRef<SVGSVGElement>(null)
+  const ticksRef = useRef<SVGGElement>(null)
+  const itemRefs = useRef<(HTMLButtonElement | null)[]>([])
+  const rotationRef = useRef({ value: activeIndex })
+  const targetRef = useRef(activeIndex)
+  const lastIndexRef = useRef(activeIndex)
 
-  useEffect(() => {
-    if (!listRef.current) return
+  // posiciona cada planeta sobre um arco que se curva para baixo
+  const layoutItems = () => {
+    const container = containerRef.current
+    if (!container) return
 
-    gsap.to(listRef.current, {
-      x: -(activeIndex * ITEM_WIDTH),
-      duration: 0.7,
-      ease: 'power3.out',
-    })
+    const radius = container.clientWidth * RADIUS_RATIO
+    const rotation = rotationRef.current.value
 
-    //efeito de arco no menu
-    const items = listRef.current.children
+    itemRefs.current.forEach((item, index) => {
+      if (!item) return
 
-    Array.from(items).forEach((item, i) => {
-      const diff = Math.abs(i - activeIndex)
+      const distance = wrapOffset(index - rotation, PLANETS.length)
+      const angle = distance * ITEM_ANGLE
+      const proximity = Math.max(1 - Math.abs(distance) / VISIBLE_RANGE, 0)
 
-      gsap.to(item, {
-        y: diff * 20,
-        duration: 0.7,
-        ease: 'power3.out',
+      gsap.set(item, {
+        x: Math.sin(angle) * radius,
+        y: (1 - Math.cos(angle)) * radius,
+        scale: 0.55 + proximity * 0.45,
+        autoAlpha: Math.pow(proximity, 1.2),
+        zIndex: Math.round(proximity * 10),
       })
     })
-  }, [activeIndex])
 
-  function getPosition(index: number) {
-    const diff = index - activeIndex
-
-    if (diff === 0) return 'active'
-    if (diff === -1) return 'prev'
-    if (diff === 1) return 'next'
-    return 'hidden'
+    gsap.set(dialRef.current, {
+      width: radius * 2,
+      height: radius * 2,
+      left: container.clientWidth / 2 - radius,
+      top: ANCHOR_Y,
+    })
+    gsap.set(ticksRef.current, {
+      rotation: (-rotation * ITEM_ANGLE * 180) / Math.PI,
+      svgOrigin: '0 0',
+    })
   }
 
-  function handleTouchStart(event: React.TouchEvent) {
-    touchStartX.current = event.touches[0].clientX
-  }
+  useGSAP(
+    () => {
+      layoutItems()
 
-  function handleTouchEnd(event: React.TouchEvent) {
-    const threshold = 40
-    const deltaX = touchStartX.current - event.changedTouches[0].clientX
+      const observer = new ResizeObserver(() => layoutItems())
+      if (containerRef.current) observer.observe(containerRef.current)
 
-    if (deltaX > threshold) onNext()
-    else if (deltaX < -threshold) onPrev()
-  }
+      return () => observer.disconnect()
+    },
+    { scope: containerRef }
+  )
+
+  useGSAP(
+    () => {
+      const offset = getCircularOffset(
+        lastIndexRef.current,
+        activeIndex,
+        PLANETS.length
+      )
+      lastIndexRef.current = activeIndex
+      targetRef.current += offset
+
+      gsap.to(rotationRef.current, {
+        value: targetRef.current,
+        duration: reducedMotion ? 0.3 : 1.1,
+        ease: 'expo.out',
+        overwrite: true,
+        onUpdate: layoutItems,
+      })
+    },
+    { dependencies: [activeIndex, reducedMotion], scope: containerRef }
+  )
 
   return (
     <div
-      className="relative flex h-32 w-full items-center justify-center overflow-hidden"
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
+      ref={containerRef}
+      className="relative h-28 w-full overflow-hidden md:h-32"
     >
-      <div
-        ref={listRef}
-        className="relative flex items-center"
-        style={{ width: ITEM_WIDTH }}
+      <svg
+        ref={dialRef}
+        viewBox="-100 -100 200 200"
+        aria-hidden
+        className="pointer-events-none absolute overflow-visible"
       >
-        {PLANETS.map((planet, index) => (
-          <div
-            key={planet.id}
-            className="flex shrink-0 items-center justify-center"
-            style={{ width: ITEM_WIDTH }}
-          >
-            <RouletteItem
-              planet={planet}
-              position={getPosition(index)}
-              onClick={() => onSelect(index)}
-            />
-          </div>
-        ))}
-      </div>
+        <g transform="rotate(-90)">
+          <circle
+            r="100"
+            fill="none"
+            className="stroke-star-100/10"
+            vectorEffect="non-scaling-stroke"
+          />
+          <g ref={ticksRef}>{TICKS}</g>
+        </g>
+      </svg>
+
+      <nav aria-label="Planetas">
+        <ul>
+          {PLANETS.map((planet, index) => (
+            <li key={planet.id}>
+              <RouletteItem
+                ref={(element) => {
+                  itemRefs.current[index] = element
+                }}
+                planet={planet}
+                isActive={index === activeIndex}
+                onClick={() => onSelect(index)}
+                // top-[44px] = ANCHOR_Y; margens centralizam a miniatura
+                // (translate do CSS seria sobrescrito pelo x/y do GSAP)
+                className="top-[44px] left-1/2 -mt-7 -ml-7"
+              />
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
   )
 }
