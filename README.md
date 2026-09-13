@@ -33,11 +33,15 @@ A navegação acontece através do scroll do mouse, teclas direcionais ou swipe 
 
 Funcionalidades:
 
-- Visualização 3D dos planetas com texturas reais e rotação contínua
-- Dados astronômicos em tempo real (massa, gravidade, raio, órbita, luas)
-- Navegação por scroll, teclado e swipe
-- Menu roleta vertical no desktop e carrossel horizontal no mobile
-- Animações de entrada e transição com GSAP e Framer Motion
+- Visualização 3D dos planetas com texturas reais, inclinação axial real, atmosfera, nuvens (Terra) e anéis (Saturno)
+- Céu estrelado 3D com parallax do mouse e efeito de "salto" a cada troca de planeta
+- Dados astronômicos em tempo real (massa, gravidade, raio, órbita, temperatura, luas, distância do Sol e rotação)
+- Navegação por scroll, teclado (setas, Home/End e teclas 1 a 8) e swipe
+- Roleta em arco: vertical no desktop e horizontal no mobile
+- Preloader com o progresso real do carregamento das texturas
+- Animações com GSAP e Framer Motion: letras reveladas, contadores, textos "decodificados", nome do planeta em marquee, cursor customizado e botões magnéticos
+- Interface que assume a cor de cada planeta
+- Respeita a preferência de movimento reduzido do sistema
 - Design responsivo mobile-first
 
 ---
@@ -75,7 +79,6 @@ As seguintes tecnologias foram utilizadas no projeto:
 - [Axios](https://www.npmjs.com/package/axios)
 - [Tanstack Query](https://tanstack.com/query/latest)
 - [Solar System OpenData](https://api.le-systeme-solaire.net)
-- [NASA Images API](https://images-api.nasa.gov)
 
 ---
 
@@ -107,6 +110,8 @@ Para rodar, você pode utilizar o NPM:
 ``` bash
 # Instala as dependências necessárias
 $ npm install
+# Cria o arquivo de variáveis de ambiente (preencha com a sua chave da Solar System OpenData)
+$ cp .env.example .env
 # Executa a aplicação
 $ npm run dev
 ```

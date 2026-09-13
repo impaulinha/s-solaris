@@ -1,59 +1,150 @@
-import { useRef, useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { useTexture } from '@react-three/drei'
-import { gsap } from 'gsap'
 import * as THREE from 'three'
+import { RINGED_PLANET_SCALE } from '@/constants/scene'
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
+import { gsap } from '@/lib/gsap'
+import { pointer } from '@/lib/pointer'
+import type { Direction, IPlanet } from '@/types/planet'
+import { PlanetAtmosphere } from './PlanetAtmosphere'
+import { PlanetClouds } from './PlanetClouds'
 import { PlanetRing } from './PlanetRing'
-import type { IPlanet } from '@/types/planet'
 
 interface IPlanetSphereProps {
   planet: IPlanet
-  radius?: number
+  direction: Direction
+  radius: number
+  isReady: boolean
 }
 
-export function PlanetSphere({ planet, radius = 1 }: IPlanetSphereProps) {
-  const meshRef = useRef<THREE.Mesh>(null)
-  const materialRef = useRef<THREE.MeshStandardMaterial>(null)
-  const [currentTexture, setCurrentTexture] = useState(planet.texture)
-  const texture = useTexture(currentTexture)
+// inclina o eixo em direção à câmera para mostrar polos e anéis
+const VIEW_TILT = 0.32
+const SPIN_SPEED = 0.1
+// distância percorrida na troca, medida em raios do planeta
+const TRAVEL = 2.4
 
-  // rotação contínua
-  useFrame((_, delta) => {
-    if (!meshRef.current) return
-    meshRef.current.rotation.y += delta * 0.12
-  })
+export function PlanetSphere({
+  planet,
+  direction,
+  radius,
+  isReady,
+}: IPlanetSphereProps) {
+  const reducedMotion = usePrefersReducedMotion()
+  // planeta renderizado: só acompanha o ativo depois da animação de saída
+  const [displayed, setDisplayed] = useState(planet)
+  const texture = useTexture(displayed.texture)
+
+  const rigRef = useRef<THREE.Group>(null)
+  const spinRef = useRef<THREE.Group>(null)
+  // valores animados pelo GSAP e aplicados na cena a cada frame
+  const motionRef = useRef({ scale: 0, x: 0, spin: -3 })
 
   useEffect(() => {
-    if (!materialRef.current) return
+    if (!isReady) return
 
-    gsap.to(materialRef.current, {
-      opacity: 0,
-      duration: 0.35,
-      ease: 'power2.in',
-      onComplete: () => {
-        setCurrentTexture(planet.texture)
-        gsap.to(materialRef.current!, {
-          opacity: 1,
-          duration: 0.5,
-          ease: 'power2.out',
-        })
-      },
+    const motion = motionRef.current
+
+    if (planet.id !== displayed.id) {
+      // saída: o planeta atual encolhe e escapa no sentido oposto ao da navegação
+      const tween = gsap.to(motion, {
+        scale: 0,
+        x: reducedMotion ? 0 : -direction * TRAVEL,
+        spin: `+=${direction * 1.6}`,
+        duration: reducedMotion ? 0.2 : 0.55,
+        ease: 'power3.in',
+        onComplete: () => {
+          motion.x = reducedMotion ? 0 : direction * TRAVEL
+          motion.spin -= direction * 2.4
+          setDisplayed(planet)
+        },
+      })
+
+      return () => {
+        tween.kill()
+      }
+    }
+
+    // entrada: também é a animação de abertura, logo após o preloader
+    const tween = gsap.to(motion, {
+      scale: 1,
+      x: 0,
+      spin: `+=${direction * 2.4}`,
+      duration: reducedMotion ? 0.3 : 1.8,
+      ease: 'expo.out',
     })
-  }, [planet.id])
+
+    return () => {
+      tween.kill()
+    }
+  }, [planet, displayed, direction, isReady, reducedMotion])
+
+  useFrame((state, delta) => {
+    const rig = rigRef.current
+    const spin = spinRef.current
+    if (!rig || !spin) return
+
+    const motion = motionRef.current
+    const size = radius * (displayed.ringTexture ? RINGED_PLANET_SCALE : 1)
+
+    rig.scale.setScalar(Math.max(motion.scale * size, 0.0001))
+    rig.position.x = motion.x * size
+
+    // parallax suave: o planeta "olha" para o mouse
+    rig.rotation.x = THREE.MathUtils.damp(
+      rig.rotation.x,
+      -pointer.y * 0.12,
+      2.5,
+      delta
+    )
+    rig.rotation.y = THREE.MathUtils.damp(
+      rig.rotation.y,
+      pointer.x * 0.2,
+      2.5,
+      delta
+    )
+
+    spin.rotation.y = state.clock.elapsedTime * SPIN_SPEED + motion.spin
+  })
 
   return (
-    <group>
-      <mesh ref={meshRef}>
-        <sphereGeometry args={[radius, 64, 64]} />
-        <meshStandardMaterial
-          ref={materialRef}
-          map={texture}
-          transparent
-          opacity={1}
-        />
-      </mesh>
+    <>
+      <group ref={rigRef}>
+        <group
+          rotation={[
+            VIEW_TILT,
+            0,
+            -THREE.MathUtils.degToRad(displayed.axialTilt),
+          ]}
+        >
+          <group ref={spinRef}>
+            <mesh>
+              <sphereGeometry args={[1, 96, 64]} />
+              <meshStandardMaterial map={texture} roughness={1} metalness={0} />
+            </mesh>
 
-      {planet.ringTexture && <PlanetRing textureUrl={planet.ringTexture} />}
-    </group>
+            {displayed.cloudsTexture && (
+              <PlanetClouds textureUrl={displayed.cloudsTexture} />
+            )}
+          </group>
+
+          {displayed.ringTexture && (
+            <PlanetRing textureUrl={displayed.ringTexture} />
+          )}
+        </group>
+
+        <PlanetAtmosphere
+          color={displayed.color}
+          intensity={displayed.atmosphere}
+        />
+      </group>
+
+      {/* contraluz na cor do planeta: desenha a borda do lado noturno */}
+      <directionalLight
+        position={[6, 1.5, -5]}
+        intensity={1.6}
+        color={displayed.color}
+      />
+    </>
   )
 }

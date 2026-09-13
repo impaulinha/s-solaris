@@ -1,28 +1,50 @@
 import { PLANETS } from '@/constants/planets'
+import { getCircularOffset } from '@/lib/utils'
+import type { Direction } from '@/types/planet'
 import { useCallback, useState } from 'react'
 
+interface IActivePlanetState {
+  index: number
+  direction: Direction
+}
+
 export function useActivePlanet() {
-  const [activeIndex, setActiveIndex] = useState(0)
+  const [state, setState] = useState<IActivePlanetState>({
+    index: 0,
+    direction: 1,
+  })
 
   const goToNextPlanet = useCallback(() => {
-    setActiveIndex((prev) => (prev < PLANETS.length - 1 ? prev + 1 : 0))
+    setState(({ index }) => ({
+      index: (index + 1) % PLANETS.length,
+      direction: 1,
+    }))
   }, [])
 
   const goToPrevPlanet = useCallback(() => {
-    setActiveIndex((prev) => (prev > 0 ? prev - 1 : PLANETS.length - 1))
+    setState(({ index }) => ({
+      index: (index - 1 + PLANETS.length) % PLANETS.length,
+      direction: -1,
+    }))
   }, [])
 
-  const goToIndexPlanet = useCallback((index: number) => {
-    if (index >= 0 && index < PLANETS.length) {
-      setActiveIndex(index)
-    }
+  const goToIndexPlanet = useCallback((nextIndex: number) => {
+    if (nextIndex < 0 || nextIndex >= PLANETS.length) return
+
+    setState((prev) => {
+      if (prev.index === nextIndex) return prev
+
+      const offset = getCircularOffset(prev.index, nextIndex, PLANETS.length)
+      return { index: nextIndex, direction: offset > 0 ? 1 : -1 }
+    })
   }, [])
 
   return {
-    activeIndex,
+    activeIndex: state.index,
+    activePlanet: PLANETS[state.index],
+    direction: state.direction,
     goToNextPlanet,
     goToPrevPlanet,
     goToIndexPlanet,
-    activePlanet: PLANETS[activeIndex],
   }
 }

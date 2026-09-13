@@ -6,9 +6,11 @@ export const PLANETS: IPlanet[] = [
     index: 1,
     name: 'Mercúrio',
     apiId: 'mercure',
-    nasaQuery: 'Mercury planet',
+    category: 'Planeta rochoso',
+    color: '#c8b9a6',
+    axialTilt: 0.03,
+    atmosphere: 0.25,
     texture: '/textures/mercury.jpg',
-    color: 'planet-mercury',
     description:
       'Mercúrio é o menor planeta do Sistema Solar e o mais próximo do Sol. Sua superfície está fortemente craterada, lembrando a Lua, com temperaturas que variam de 430°C durante o dia para -180°C à noite.',
   },
@@ -17,9 +19,11 @@ export const PLANETS: IPlanet[] = [
     index: 2,
     name: 'Vênus',
     apiId: 'venus',
-    nasaQuery: 'Venus planet',
+    category: 'Planeta rochoso',
+    color: '#f0c27b',
+    axialTilt: 177.36,
+    atmosphere: 1,
     texture: '/textures/venus.jpg',
-    color: 'planet-venus',
     description:
       'Vênus é o segundo planeta a partir do Sol e o mais quente do Sistema Solar, com temperaturas na superfície que chegam a 465°C. Sua densa atmosfera de dióxido de carbono cria um efeito estufa extremo.',
   },
@@ -28,20 +32,25 @@ export const PLANETS: IPlanet[] = [
     index: 3,
     name: 'Terra',
     apiId: 'terre',
-    nasaQuery: 'Earth planet',
+    category: 'Planeta rochoso',
+    color: '#6cb4ff',
+    axialTilt: 23.44,
+    atmosphere: 0.9,
     texture: '/textures/earth.jpg',
-    color: 'planet-earth',
+    cloudsTexture: '/textures/earth-clouds.jpg',
     description:
-      'Terra é o terceiro planeta a partir do Sol e o único objeto conhecido no universo a abrigar vida. Ela se move em torno do Sol em 365.26 dias e é o planeta mais denso do Sistema Solar.',
+      'Terra é o terceiro planeta a partir do Sol e o único objeto conhecido no universo a abrigar vida. Ela se move em torno do Sol em 365,26 dias e é o planeta mais denso do Sistema Solar.',
   },
   {
     id: 'mars',
     index: 4,
     name: 'Marte',
     apiId: 'mars',
-    nasaQuery: 'Mars planet surface',
+    category: 'Planeta rochoso',
+    color: '#ff7a4d',
+    axialTilt: 25.19,
+    atmosphere: 0.55,
     texture: '/textures/mars.jpg',
-    color: 'planet-mars',
     description:
       'Marte é o quarto planeta a partir do Sol e o segundo menor do Sistema Solar. Conhecido como o Planeta Vermelho, sua aparência avermelhada provém do óxido de ferro em sua superfície.',
   },
@@ -50,9 +59,11 @@ export const PLANETS: IPlanet[] = [
     index: 5,
     name: 'Júpiter',
     apiId: 'jupiter',
-    nasaQuery: 'Jupiter planet',
+    category: 'Gigante gasoso',
+    color: '#e6b17e',
+    axialTilt: 3.13,
+    atmosphere: 0.75,
     texture: '/textures/jupiter.jpg',
-    color: 'planet-jupiter',
     description:
       'Júpiter é o quinto planeta a partir do Sol e o maior do Sistema Solar. Um gigante gasoso com uma massa mais de duas vezes maior que a de todos os outros planetas juntos, sua icônica Grande Mancha Vermelha é uma tempestade com mais de 350 anos.',
   },
@@ -61,9 +72,11 @@ export const PLANETS: IPlanet[] = [
     index: 6,
     name: 'Saturno',
     apiId: 'saturne',
-    nasaQuery: 'Saturn planet rings',
+    category: 'Gigante gasoso',
+    color: '#f3d9a4',
+    axialTilt: 26.73,
+    atmosphere: 0.7,
     texture: '/textures/saturn.jpg',
-    color: 'planet-saturn',
     ringTexture: '/textures/saturn-ring.png',
     description:
       'Saturno é o sexto planeta a partir do Sol e o segundo maior. Seu espetacular sistema de anéis, feito de gelo e rocha, estende-se até 282.000 km do planeta, mas é notavelmente fino — com apenas cerca de 10 metros de espessura.',
@@ -73,9 +86,11 @@ export const PLANETS: IPlanet[] = [
     index: 7,
     name: 'Urano',
     apiId: 'uranus',
-    nasaQuery: 'Uranus planet',
+    category: 'Gigante de gelo',
+    color: '#8ee8e2',
+    axialTilt: 97.77,
+    atmosphere: 0.85,
     texture: '/textures/uranus.jpg',
-    color: 'planet-uranus',
     description:
       'Urano é o sétimo planeta a partir do Sol. Ele gira de lado com uma inclinação axial de 98 graus, o que o torna único entre os planetas. Sua cor azul-esverdeada provém do metano em sua atmosfera.',
   },
@@ -84,12 +99,19 @@ export const PLANETS: IPlanet[] = [
     index: 8,
     name: 'Netuno',
     apiId: 'neptune',
-    nasaQuery: 'Neptune planet',
+    category: 'Gigante de gelo',
+    color: '#6f8dff',
+    axialTilt: 28.32,
+    atmosphere: 0.9,
     texture: '/textures/neptune.jpg',
-    color: 'planet-neptune',
     description:
       'Netuno é o oitavo planeta conhecido e o mais distante do Sol. É o mais denso dos planetas gigantes, com os ventos mais fortes do Sistema Solar, que chegam a 2.100 km/h.',
   },
 ]
 
-export type PlanetId = (typeof PLANETS)[number]['id']
+// todas as texturas da cena, pré-carregadas enquanto o preloader é exibido
+export const PLANET_TEXTURES = PLANETS.flatMap((planet) =>
+  [planet.texture, planet.cloudsTexture, planet.ringTexture].filter(
+    (texture): texture is string => Boolean(texture)
+  )
+)
