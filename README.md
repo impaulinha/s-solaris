@@ -60,13 +60,13 @@ Abaixo, uma demonstração da aplicação:
 ### 💻 Web
 
 <div align="center">
-  <video src="https://github.com/user-attachments/assets/449a0d06-0d15-45a3-b433-c9b89320e5f6" width="100%" autoplay loop muted playsinline></video>
+  <img src="./.github/assets/preview-web.jpg" alt="S-Solaris no desktop exibindo Saturno, com a roleta de planetas, os dados astronômicos e o mostrador ao redor do planeta" width="100%">
 </div>
 
 ### 📱 Mobile
 
 <div align="center">
-  <video src="https://github.com/user-attachments/assets/d01fa28b-b73a-44a6-a71e-4af612e8cd6c" width="100%" autoplay loop muted playsinline></video>
+  <img src="./.github/assets/preview-mobile.jpg" alt="S-Solaris no celular exibindo a Terra, com o mostrador ao redor do planeta, o nome, a descrição e a roleta de planetas" width="360">
 </div>
 
 ---
