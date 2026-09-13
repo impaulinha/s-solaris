@@ -44,7 +44,7 @@ const charVariants: Variants = {
 
 export function PlanetHeader({ planet }: IPlanetHeaderProps) {
   return (
-    <div className="flex flex-col gap-5 md:gap-7">
+    <div className="flex flex-col gap-5 md:gap-7 md:short:gap-4">
       <motion.div
         variants={metaVariants}
         className="flex flex-wrap items-center gap-x-4 gap-y-3 font-mono text-[11px] tracking-[0.2em] uppercase"
@@ -67,7 +67,8 @@ export function PlanetHeader({ planet }: IPlanetHeaderProps) {
         </span>
       </motion.div>
 
-      <h1 className="font-serif text-[clamp(3.5rem,21cqi,10rem)] leading-[0.9] font-light tracking-[-0.02em] text-star-100">
+      {/* o título acompanha a largura da coluna e também a altura da tela */}
+      <h1 className="font-serif text-[length:clamp(3rem,min(21cqi,15vh),10rem)] leading-[0.9] font-light tracking-[-0.02em] text-star-100">
         <span className="sr-only">{planet.name}</span>
         <motion.span
           aria-hidden

@@ -31,7 +31,7 @@ const itemVariants: Variants = {
 }
 
 const GRID_CLASSES =
-  'mt-8 grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 md:mt-10 lg:gap-x-10 lg:gap-y-7'
+  'mt-8 grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 md:mt-10 lg:gap-x-10 lg:gap-y-7 md:short:mt-6 lg:short:gap-y-4'
 
 const SHIMMER_CLASSES =
   'animate-shimmer rounded-full bg-linear-to-r from-star-100/5 via-star-100/15 to-star-100/5 bg-size-[200%_100%]'

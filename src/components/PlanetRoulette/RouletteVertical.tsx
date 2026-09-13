@@ -172,7 +172,7 @@ export function RouletteVertical({
         </ul>
       </nav>
 
-      <div className="absolute bottom-9 left-10 flex items-center gap-4 font-mono text-[10px] tracking-[0.25em] text-star-400 uppercase">
+      <div className="absolute bottom-9 left-10 flex items-center gap-4 font-mono text-[10px] tracking-[0.25em] text-star-400 uppercase short:bottom-6">
         <span className="relative h-10 w-px overflow-hidden bg-star-100/10">
           <span className="absolute inset-x-0 top-0 h-1/2 animate-scroll-line bg-planet" />
         </span>

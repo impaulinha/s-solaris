@@ -41,6 +41,7 @@ Funcionalidades:
 - Preloader com o progresso real do carregamento das texturas
 - Animações com GSAP e Framer Motion: letras reveladas, contadores, textos "decodificados", nome do planeta em marquee, cursor customizado e botões magnéticos
 - Interface que assume a cor de cada planeta
+- Páginas de 404 e de erro no mesmo estilo visual, com um planeta animado em CSS
 - Respeita a preferência de movimento reduzido do sistema
 - Design responsivo mobile-first
 

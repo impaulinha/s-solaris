@@ -1,6 +1,6 @@
 // raio do planeta dentro do palco (stage): o menor entre as duas frações
 export const PLANET_WIDTH_RATIO = 0.37
-export const PLANET_HEIGHT_RATIO = 0.36
+export const PLANET_HEIGHT_RATIO = 0.32
 
 // planetas com anéis encolhem para que o anel caiba no enquadramento
 export const RINGED_PLANET_SCALE = 0.6

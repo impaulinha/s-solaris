@@ -1,4 +1,5 @@
 import type { ReactNode, Ref } from 'react'
+import { FilmOverlay } from '@/components/FilmOverlay'
 
 interface LayoutProps {
   backdrop: ReactNode
@@ -31,15 +32,7 @@ export function Layout({
         {scene}
       </div>
 
-      {/* vinheta e granulado de filme */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 z-[2] bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(3,4,10,0.85)_100%)]"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -inset-1/2 z-[3] animate-grain bg-noise opacity-[0.07]"
-      />
+      <FilmOverlay />
 
       <div
         className="
@@ -64,7 +57,9 @@ export function Layout({
           className="
             relative order-2 flex min-h-0 flex-col px-6 [container-type:inline-size]
             md:col-start-2 md:row-start-1 md:justify-center md:px-10 md:pt-24
+            md:short:pt-20
             lg:order-2 lg:pt-28 lg:pr-6 lg:pb-32 lg:pl-4
+            lg:short:pt-20 lg:short:pb-20
           "
         >
           {info}

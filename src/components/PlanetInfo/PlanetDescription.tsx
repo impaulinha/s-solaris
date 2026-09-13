@@ -25,7 +25,7 @@ export function PlanetDescription({ description }: IPlanetDescriptionProps) {
   return (
     <motion.p
       variants={paragraphVariants}
-      className="mt-6 max-w-md text-[15px] leading-relaxed text-star-300 md:mt-8 md:text-base lg:max-w-[31rem]"
+      className="mt-6 max-w-md text-[15px] leading-relaxed text-star-300 md:mt-8 md:text-base lg:max-w-[31rem] md:short:mt-5 md:short:text-[15px] lg:short:max-w-[38rem]"
     >
       <span className="sr-only">{description}</span>
       {words.map((word, index) => (

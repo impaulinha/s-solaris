@@ -30,7 +30,7 @@ export function PlanetNav({
   return (
     <footer
       data-intro
-      className="pointer-events-none absolute inset-x-0 bottom-0 z-20 hidden items-center justify-between gap-8 pr-10 pb-8 pl-[calc(var(--rail-width)+1rem)] lg:flex"
+      className="pointer-events-none absolute inset-x-0 bottom-0 z-20 hidden items-center justify-between gap-8 pr-10 pb-8 pl-[calc(var(--rail-width)+1rem)] lg:flex short:pb-5"
     >
       <NavButton direction={-1} label={prevPlanet.name} onClick={onPrev} />
 

@@ -214,7 +214,7 @@ export function PlanetHud({ planet, direction, isReady }: IPlanetHudProps) {
 
       <dl
         data-intro
-        className="absolute bottom-8 left-8 hidden w-60 flex-col gap-2.5 rounded-sm border border-star-100/10 bg-space-950/40 p-4 font-mono text-[10px] tracking-[0.2em] uppercase backdrop-blur-md md:flex lg:top-24 lg:right-8 lg:bottom-auto lg:left-auto"
+        className="absolute bottom-8 left-8 hidden w-60 flex-col gap-2.5 rounded-sm border border-star-100/10 bg-space-950/40 p-4 font-mono text-[10px] tracking-[0.2em] uppercase backdrop-blur-md md:flex lg:top-24 lg:right-8 lg:bottom-auto lg:left-auto short:gap-2 short:p-3 lg:short:top-20"
       >
         <div className="mb-1 flex items-center gap-2 text-star-400">
           <span className="size-1.5 bg-planet" />

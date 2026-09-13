@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react'
 import LOGO from '@/assets/logo-ssolaris.png'
+import { PLANETS } from '@/constants/planets'
 import { useMagnetic } from '@/hooks/useMagnetic'
+import { padIndex } from '@/lib/utils'
 
 const REPOSITORY_URL = 'https://github.com/impaulinha/s-solaris'
 
@@ -10,7 +11,7 @@ export function Navbar() {
   return (
     <header
       data-intro
-      className="pointer-events-none absolute inset-x-0 top-0 z-30 flex items-center justify-between px-5 py-4 md:px-8 md:py-6 lg:px-10"
+      className="pointer-events-none absolute inset-x-0 top-0 z-30 flex items-center justify-between px-5 py-4 md:px-8 md:py-6 lg:px-10 md:short:py-4"
     >
       <a
         href="/"
@@ -31,9 +32,7 @@ export function Navbar() {
       <div className="hidden items-center gap-3 font-mono text-[10px] tracking-[0.25em] text-star-400 uppercase lg:flex">
         <span>Sistema Solar</span>
         <span className="size-1 rounded-full bg-planet" />
-        <span>08 planetas</span>
-        <span className="size-1 rounded-full bg-star-400/60" />
-        <UtcClock />
+        <span>{padIndex(PLANETS.length)} planetas</span>
       </div>
 
       <a
@@ -61,32 +60,4 @@ export function Navbar() {
       </a>
     </header>
   )
-}
-
-// relógio UTC atualizado direto no DOM, sem re-renderizar a navbar
-function UtcClock() {
-  const clockRef = useRef<HTMLTimeElement>(null)
-
-  useEffect(() => {
-    const formatter = new Intl.DateTimeFormat('pt-BR', {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: false,
-      timeZone: 'UTC',
-    })
-
-    const tick = () => {
-      if (clockRef.current) {
-        clockRef.current.textContent = `${formatter.format(new Date())} UTC`
-      }
-    }
-
-    tick()
-    const interval = window.setInterval(tick, 1000)
-
-    return () => window.clearInterval(interval)
-  }, [])
-
-  return <time ref={clockRef} className="min-w-[11ch] tabular-nums" />
 }

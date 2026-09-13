@@ -24,7 +24,7 @@ const lineVariants: Variants = {
 
 export function StatBlock({ label, stat }: StatBlockProps) {
   return (
-    <div className="relative flex flex-col gap-2 pt-4">
+    <div className="relative flex flex-col gap-2 pt-4 short:gap-1 short:pt-3">
       <span
         aria-hidden
         className="absolute inset-x-0 top-0 h-px bg-star-100/10"
@@ -41,7 +41,7 @@ export function StatBlock({ label, stat }: StatBlockProps) {
 
       <dd className="flex flex-wrap items-baseline gap-x-1.5 text-star-100">
         {stat.value === null ? (
-          <span className="text-2xl font-extralight lg:text-[1.75rem]">
+          <span className="text-2xl font-extralight lg:text-[1.75rem] lg:short:text-xl">
             —<span className="sr-only">Desconhecido</span>
           </span>
         ) : (
@@ -49,7 +49,7 @@ export function StatBlock({ label, stat }: StatBlockProps) {
             <AnimatedNumber
               value={stat.value}
               decimals={stat.decimals}
-              className="text-2xl font-extralight tracking-tight tabular-nums lg:text-[1.75rem]"
+              className="text-2xl font-extralight tracking-tight tabular-nums lg:text-[1.75rem] lg:short:text-xl"
             />
             {stat.unit && (
               <span className="font-mono text-[11px] text-star-300">
